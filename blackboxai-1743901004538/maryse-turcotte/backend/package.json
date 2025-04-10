@@ -1,7 +1,7 @@
 {
-  "name": "maryse-turcotte-backend",
+  "name": "clair-backend",
   "version": "1.0.0",
-  "description": "Backend server for Maryse Turcotte AI Assistant",
+  "description": "Backend server for Clair AI Assistant",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
