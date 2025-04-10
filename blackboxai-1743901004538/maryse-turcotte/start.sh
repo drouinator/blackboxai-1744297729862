@@ -9,7 +9,7 @@ fuser -k 3000/tcp 2>/dev/null || true
 fuser -k 8000/tcp 2>/dev/null || true
 
 # Start the backend server
-echo "Starting Maryse Turcotte Neural Core..."
+echo "Starting Clair Neural Core..."
 cd "$SCRIPT_DIR/backend" && npm install && node index.js &
 BACKEND_PID=$!
 
@@ -17,11 +17,11 @@ BACKEND_PID=$!
 sleep 2
 
 # Start the web server
-echo "Starting Maryse Turcotte Neural Interface..."
+echo "Starting Clair Neural Interface..."
 cd "$SCRIPT_DIR/web" && python3 -m http.server 8000 &
 WEB_PID=$!
 
-echo "🧠 Maryse Turcotte Neural System Online!"
+echo "🧠 Clair Neural System Online!"
 echo "Access Neural Interface at: http://localhost:8000/character.html"
 echo "Neural Core API running at: http://localhost:3000"
 echo "Press Ctrl+C to terminate neural connections"
