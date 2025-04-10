@@ -97,5 +97,5 @@ app.post('/voice-command', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Maryse Turcotte backend running on port ${PORT}`);
+    console.log(`Clair backend running on port ${PORT}`);
 });
