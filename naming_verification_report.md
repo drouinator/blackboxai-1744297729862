@@ -1,12 +1,23 @@
 
 # Naming Consistency Report
-Generated on: 2025-04-10T15:03:51.510Z
+Generated on: 2025-04-10T15:13:46.914Z
 
 ## Files Needing Updates
+- ❌ blackboxai-1742124729480/clair.html
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/README.md
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/clairapp_installation_instructions.md
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/clairapp_live_deployment_instructions.md
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/docs/architecture.md
 - ❌ blackboxai-1743901004538/maryse-turcotte/backend/docs/functionality_transfer.md
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/docs/vscode_setup.md
 - ❌ blackboxai-1743901004538/maryse-turcotte/backend/index.js
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/integration_summary.md
 - ❌ blackboxai-1743901004538/maryse-turcotte/backend/package.json
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/scripts/setup.js
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/scripts/update_names.js
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/scripts/verify_installation.js
 - ❌ blackboxai-1743901004538/maryse-turcotte/backend/scripts/verify_naming.js
+- ❌ blackboxai-1743901004538/maryse-turcotte/backend/tests/integration_test.js
 - ❌ blackboxai-1743901004538/maryse-turcotte/start.sh
 - ❌ blackboxai-1743901004538/maryse-turcotte/ui/index.html
 - ❌ blackboxai-1743901004538/maryse-turcotte/ui/package.json
@@ -15,6 +26,7 @@ Generated on: 2025-04-10T15:03:51.510Z
 - ❌ blackboxai-1743901004538/maryse-turcotte/web/test.html
 
 ## Verified Files
+- ✅ README.md
 - ✅ blackboxai-1742124729480/OmegaAI/OmegaAI.html
 - ✅ blackboxai-1742124729480/OmegaAI/README.md
 - ✅ blackboxai-1742124729480/OmegaAI/assets/favicon.svg
@@ -30,31 +42,22 @@ Generated on: 2025-04-10T15:03:51.510Z
 - ✅ blackboxai-1742124729480/OmegaAI/sw.js
 - ✅ blackboxai-1742124729480/OmegaAI.html
 - ✅ blackboxai-1742124729480/README.md
-- ✅ blackboxai-1742124729480/clair.html
 - ✅ blackboxai-1742124729480/index.html
 - ✅ blackboxai-1742124729480/src/components/CodingAssistantPlaceholder.jsx
 - ✅ blackboxai-1742124729480/src/components/Dashboard.jsx
 - ✅ blackboxai-1742124729480/src/index.jsx
 - ✅ blackboxai-1743901004538/README.md
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/README.md
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/clairapp_installation_instructions.md
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/clairapp_live_deployment_instructions.md
 - ✅ blackboxai-1743901004538/maryse-turcotte/backend/commands.js
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/docs/architecture.md
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/docs/vscode_setup.md
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/integration_summary.md
 - ✅ blackboxai-1743901004538/maryse-turcotte/backend/logging.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/backend/package-lock.json
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/scripts/setup.js
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/scripts/verify_installation.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/backend/systemStats.js
-- ✅ blackboxai-1743901004538/maryse-turcotte/backend/tests/integration_test.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/backend/voice.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/ui/main.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/ui/package-lock.json
 - ✅ blackboxai-1743901004538/maryse-turcotte/ui/renderer.js
 - ✅ blackboxai-1743901004538/maryse-turcotte/web/clair.html
 - ✅ blackboxai-1743901004538/maryse-turcotte/web/styles.css
+- ✅ naming_verification_report.md
 - ✅ omega/.github/ISSUE_TEMPLATE/bug_report.md
 - ✅ omega/.github/ISSUE_TEMPLATE/feature_request.md
 - ✅ omega/.github/pull_request_template.md
@@ -199,9 +202,9 @@ Generated on: 2025-04-10T15:03:51.510Z
 
 
 ## Summary
-- Total files checked: 189
-- Files needing updates: 10
-- Files verified: 179
+- Total files checked: 192
+- Files needing updates: 21
+- Files verified: 171
 - Errors: 0
 
 ## Next Steps
