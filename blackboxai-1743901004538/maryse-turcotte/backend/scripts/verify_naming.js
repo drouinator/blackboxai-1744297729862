@@ -5,7 +5,7 @@ import { join } from 'path';
 
 console.log('🔍 Verifying naming consistency...\n');
 
-const oldName = 'Maryse Turcotte';
+const oldName = 'Clair';
 const newName = 'Clair';
 
 function scanDirectory(dir) {
