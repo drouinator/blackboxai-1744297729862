@@ -1,7 +1,7 @@
 {
-  "name": "maryse-turcotte-ui",
+  "name": "clair-ui",
   "version": "1.0.0",
-  "description": "Electron-based UI for Maryse Turcotte AI Assistant",
+  "description": "Electron-based UI for Clair AI Assistant",
   "main": "main.js",
   "scripts": {
     "start": "electron . --no-sandbox",
