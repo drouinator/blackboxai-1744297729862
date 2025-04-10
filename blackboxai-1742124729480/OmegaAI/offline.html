@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmegaAI - Offline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+    <div class="max-w-md w-full text-center">
+        <!-- Offline Icon -->
+        <div class="mb-8 relative inline-block animate-float">
+            <div class="w-32 h-32 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
+                <i class="fas fa-wifi text-white text-4xl transform rotate-45"></i>
+            </div>
+            <div class="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-times text-white text-sm"></i>
+            </div>
+        </div>
+
+        <!-- Message -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">You're Offline</h1>
+        <p class="text-gray-600 mb-8">
+            It seems you've lost your internet connection. Don't worry - some features of OmegaAI are still available offline.
+        </p>
+
+        <!-- Available Features -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Available Offline</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 bg-indigo-50 rounded-lg">
+                    <i class="fas fa-book text-indigo-500 text-xl mb-2"></i>
+                    <p class="text-sm text-gray-700">Documentation</p>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-lg">
+                    <i class="fas fa-history text-purple-500 text-xl mb-2"></i>
+                    <p class="text-sm text-gray-700">Recent Data</p>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <i class="fas fa-chart-bar text-blue-500 text-xl mb-2"></i>
+                    <p class="text-sm text-gray-700">Cached Stats</p>
+                </div>
+                <div class="p-4 bg-green-50 rounded-lg">
+                    <i class="fas fa-tasks text-green-500 text-xl mb-2"></i>
+                    <p class="text-sm text-gray-700">Local Tasks</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="space-y-4">
+            <button onclick="window.location.reload()" 
+                    class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                <i class="fas fa-sync-alt mr-2"></i>
+                Try Again
+            </button>
+            <a href="/" class="block text-indigo-600 hover:text-indigo-700 font-medium">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Check connection status periodically
+        setInterval(() => {
+            if (navigator.onLine) {
+                window.location.reload();
+            }
+        }, 5000);
+
+        // Listen for online event
+        window.addEventListener('online', () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
