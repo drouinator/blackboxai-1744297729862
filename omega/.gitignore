@@ -1,0 +1,103 @@
+# Omega Project .gitignore
+
+# Game ROMs and BIOS files
+Games/ROMs/
+Games/bios/
+*.rom
+*.bin
+*.iso
+*.cue
+*.chd
+*.gba
+*.gbc
+*.nes
+*.snes
+*.n64
+*.z64
+*.smc
+*.srm
+
+# Camera recordings and sensitive data
+Cameras/*/recordings/
+Cameras/baby_monitor/
+*.mp4
+*.avi
+*.mov
+*.jpg
+*.jpeg
+*.png
+*.webm
+*/sensitive/
+*/**/sensitive/
+
+# Log files and temporary files
+logs/
+*/logs/
+*.log
+*.log.*
+*.tmp
+*.temp
+*.swp
+.DS_Store
+Thumbs.db
+temp/
+tmp/
+
+# System-specific files
+.DS_Store
+._.DS_Store
+__MACOSX/
+._*
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+Thumbs.db
+.Spotlight-V100
+.Trashes
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Personal configuration files with credentials
+*.env
+.env
+.env.local
+config.yaml
+**/credentials/
+**/secret/
+*secret*
+*token*
+*password*
+*credentials*
+*key.json
+*keys.json
+*oauth*
+.ssh/
+
+# AI training data and large model files
+AI\ Training/datasets/
+AI\ Training/models/
+*.weights
+*.h5
+*.pb
+*.pt
+*.pth
+*.onnx
+*.mlmodel
+*.tflite
+*.model
+**/checkpoints/
+*/data/raw/
+*/data/processed/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
