@@ -1,0 +1,1 @@
+@hourly date >> ~/OmegaPi5/TDAH_Manager/DayLogs/$(date +\%Y-\%m-\%d).log
