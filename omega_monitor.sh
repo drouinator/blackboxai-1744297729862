@@ -274,5 +274,8 @@ if [ -d "$SOURCE_DIR/.git" ] && [ "$UNCOMMITTED" -gt 0 ]; then
     echo -e "${BOLD}${CYAN}┃${NC} ${YELLOW}• Uncommitted changes: ${WHITE}git add . && git commit -m \"Update\"${NC}"
 fi
 
-echo -e "${BOLD}
+echo -e "\n${BOLD}${CYAN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}"
+
+# Footer section
+echo -e "\n${YELLOW}OmegaPi5 Monitor${NC} | ${CYAN}Run './omega_backup.sh' for manual backup${NC} | ${GREEN}$(date '+%Y-%m-%d %H:%M:%S')${NC}"
 
