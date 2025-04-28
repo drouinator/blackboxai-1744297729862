@@ -1,0 +1,16 @@
+{
+  "name": "clair-ui",
+  "version": "1.0.0",
+  "description": "Electron-based UI for Clair AI Assistant",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --no-sandbox"
+  },
+  "dependencies": {
+    "electron": "^25.0.0"
+  },
+  "devDependencies": {
+    "electron-reload": "^1.5.0"
+  }
+}

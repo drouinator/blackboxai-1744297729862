@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmegaAI Server Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(129, 140, 248, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(129, 140, 248, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(129, 140, 248, 0.2); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        /* Smooth transitions */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Progress bar animation */
+        @keyframes progress {
+            from { width: 0%; }
+        }
+
+        .progress-bar {
+            animation: progress 1.5s ease-out forwards;
+        }
+
+        /* Dark mode transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors z-50">
+        <i class="fas fa-moon text-gray-600 dark:text-yellow-300"></i>
+    </button>
+    <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900 transition-all duration-500">
+        <!-- Sidebar -->
+        <aside class="fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-indigo-600 to-purple-700 text-white p-4 shadow-xl">
+            <div class="mb-8 relative">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-white/10 rounded-lg">
+                        <i class="fas fa-brain text-3xl text-purple-300"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">OmegaAI</h1>
+                        <p class="text-purple-200">Server Management</p>
+                    </div>
+                </div>
+                <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            </div>
+            <nav>
+                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-home mr-2"></i> Dashboard
+                </a>
+                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-robot mr-2"></i> AI Assistants
+                </a>
+                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-key mr-2"></i> SSH Config
+                </a>
+                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-chart-line mr-2"></i> Monitoring
+                </a>
+                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-hdd mr-2"></i> Storage
+                </a>
+                <a href="OmegaAI.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-indigo-600 mb-1">
+                    <i class="fas fa-brain mr-2"></i> OmegaAI Interface
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 p-8">
+            <!-- Header -->
+            <div class="relative mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">AI Server Overview</h2>
+                <div class="text-sm text-gray-600" data-status="sync">
+                    <i class="fas fa-check"></i> Ready to sync
+                </div>
+            </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <button id="startBtn" class="group relative overflow-hidden bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-green-500 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        <span class="relative flex items-center justify-center">
+                            <i class="fas fa-play mr-2"></i> Start AI
+                        </span>
+                    </button>
+                    <button id="stopBtn" class="group relative overflow-hidden bg-gradient-to-r from-red-400 to-pink-500 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300">
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-red-500 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        <span class="relative flex items-center justify-center">
+                            <i class="fas fa-stop mr-2"></i> Stop AI
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Assistant Status -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-purple-100 dark:border-purple-900 transform hover:scale-105 transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">AI Assistant Status</h3>
+                        <div class="relative">
+                            <span class="px-3 py-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white rounded-full text-sm font-medium">Active</span>
+                            <span class="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-600">Response Time</span>
+                                <span class="text-emerald-500 font-semibold">120ms</span>
+                            </div>
+                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-emerald-400 to-green-500 w-[20%]"></div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-600">Requests/min</span>
+                                <span class="text-indigo-500 font-semibold">45</span>
+                            </div>
+                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-indigo-400 to-purple-500 w-[45%]"></div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-600">Success Rate</span>
+                                <span class="text-purple-500 font-semibold">99.9%</span>
+                            </div>
+                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-400 to-pink-500 w-[99%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-blue-100 dark:border-blue-900 transform hover:scale-105 transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Resource Usage</h3>
+                        <div class="p-2 bg-blue-50 rounded-lg">
+                            <i class="fas fa-microchip text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-bolt text-amber-500 mr-2"></i>
+                                    <span class="text-gray-600">CPU</span>
+                                </div>
+                                <span class="text-amber-500 font-semibold" data-metric="cpu">0%</span>
+                                </div>
+                            <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" style="width: 0%">
+                                    <div class="w-full h-full opacity-50 bg-gradient-to-r from-transparent to-white/30 animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-memory text-blue-500 mr-2"></i>
+                                    <span class="text-gray-600">RAM</span>
+                                </div>
+                                <span class="text-blue-500 font-semibold" data-metric="memory">0%</span>
+                                </div>
+                            <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full" style="width: 0%">
+                                    <div class="w-full h-full opacity-50 bg-gradient-to-r from-transparent to-white/30 animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="flex justify-between mb-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-desktop text-purple-500 mr-2"></i>
+                                    <span class="text-gray-600">GPU</span>
+                                </div>
+                                <span class="text-purple-500 font-semibold" data-metric="gpu">0%</span>
+                                </div>
+                            <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full" style="width: 0%">
+                                    <div class="w-full h-full opacity-50 bg-gradient-to-r from-transparent to-white/30 animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-amber-100 dark:border-amber-900 transform hover:scale-105 transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold bg-gradient-to-r from-amber-600 to-yellow-500 bg-clip-text text-transparent">Quick Actions</h3>
+                        <div class="p-2 bg-amber-50 rounded-lg">
+                            <i class="fas fa-bolt text-amber-500 text-xl animate-pulse"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <button class="w-full group relative overflow-hidden bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 text-left px-6 py-4 rounded-xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-indigo-400/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                            <div class="relative flex items-center">
+                                <div class="p-2 bg-purple-100 rounded-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-sync text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-medium text-gray-700">Restart AI Services</span>
+                                    <span class="text-sm text-gray-500">Quick system refresh</span>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </button>
+                        <button class="w-full group relative overflow-hidden bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 text-left px-6 py-4 rounded-xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-cyan-400/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                            <div class="relative flex items-center">
+                                <div class="p-2 bg-blue-100 rounded-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-database text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-medium text-gray-700">Clear Cache</span>
+                                    <span class="text-sm text-gray-500">Free up memory</span>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </button>
+                        <button class="w-full group relative overflow-hidden bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 text-left px-6 py-4 rounded-xl transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-r from-green-400/10 to-emerald-400/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                            <div class="relative flex items-center">
+                                <div class="p-2 bg-green-100 rounded-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-download text-green-500"></i>
+                                </div>
+                                <div>
+                                    <span class="block font-medium text-gray-700">Update Models</span>
+                                    <span class="text-sm text-gray-500">Get latest AI models</span>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold mb-4">Performance History</h3>
+                    <canvas id="performanceChart" width="400" height="200"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold mb-4">Resource Allocation</h3>
+                    <canvas id="resourceChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- SSH Configuration -->
+            <div class="bg-white rounded-lg shadow p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-4">SSH Configuration</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-medium mb-2">Connection Status</h4>
+                        <div class="flex items-center text-green-500">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Connected to Pi 5
+                        </div>
+                        <div class="mt-4">
+                            <button class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600">
+                                <i class="fas fa-key mr-2"></i> Manage SSH Keys
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-2">Security Status</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-green-500">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                Firewall Active
+                            </div>
+                            <div class="flex items-center text-green-500">
+                                <i class="fas fa-lock mr-2"></i>
+                                SSH Keys Updated
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import omegaAIService from './services/index.js';
+        import config from './config/config.js';
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+
+        // Check system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.add('dark');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+        });
+
+        // Add hover animations to cards
+        document.querySelectorAll('.bg-white\\/80').forEach(card => {
+            card.classList.add('card-hover');
+        });
+
+        // Add progress bar animations
+        document.querySelectorAll('[class*="bg-gradient-to-r"]').forEach(bar => {
+            bar.classList.add('progress-bar');
+        });
+
+        // Initialize charts
+        let performanceChart, resourceChart;
+
+        function initializeCharts() {
+            // Performance Chart
+            const perfCtx = document.getElementById('performanceChart').getContext('2d');
+            performanceChart = new Chart(perfCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Response Time (ms)',
+                        data: [],
+                        borderColor: 'rgb(99, 102, 241)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Resource Chart
+            const resCtx = document.getElementById('resourceChart').getContext('2d');
+            resourceChart = new Chart(resCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AI Models', 'System Services', 'Database', 'Available'],
+                    datasets: [{
+                        data: [0, 0, 0, 100],
+                        backgroundColor: [
+                            'rgb(99, 102, 241)',
+                            'rgb(59, 130, 246)',
+                            'rgb(147, 51, 234)',
+                            'rgb(209, 213, 219)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Update charts with new data
+        function updateCharts(metrics) {
+            // Update performance chart
+            if (metrics.latency) {
+                const labels = metrics.latency.map(m => {
+                    const date = new Date(m.timestamp);
+                    return date.toLocaleTimeString();
+                });
+                const data = metrics.latency.map(m => m.value);
+
+                performanceChart.data.labels = labels;
+                performanceChart.data.datasets[0].data = data;
+                performanceChart.update();
+            }
+
+            // Update resource chart
+            if (metrics.cpu && metrics.memory && metrics.gpu) {
+                resourceChart.data.datasets[0].data = [
+                    metrics.cpu.usage,
+                    metrics.memory.percentage,
+                    metrics.gpu.usage,
+                    100 - (metrics.cpu.usage + metrics.memory.percentage + metrics.gpu.usage) / 3
+                ];
+                resourceChart.update();
+            }
+        }
+
+        // Handle dashboard updates
+        window.addEventListener('dashboard-update', (event) => {
+            const { type, data } = event.detail;
+
+            switch (type) {
+                case 'metrics':
+                    updateCharts(data.metrics);
+                    updateMetricsDisplay(data.metrics);
+                    break;
+                case 'alert':
+                    showAlert(data);
+                    break;
+                case 'sync':
+                    updateSyncStatus(data);
+                    break;
+            }
+        });
+
+        function updateMetricsDisplay(metrics) {
+            // Update CPU usage
+            if (metrics.cpu) {
+                const cpuValue = Math.round(metrics.cpu.usage);
+                document.querySelector('[data-metric="cpu"]').textContent = `${cpuValue}%`;
+                document.querySelector('[data-metric="cpu"]').parentElement.nextElementSibling
+                    .querySelector('.bg-gradient-to-r').style.width = `${cpuValue}%`;
+            }
+
+            // Update RAM usage
+            if (metrics.memory) {
+                const memValue = Math.round(metrics.memory.percentage);
+                document.querySelector('[data-metric="memory"]').textContent = `${memValue}%`;
+                document.querySelector('[data-metric="memory"]').parentElement.nextElementSibling
+                    .querySelector('.bg-gradient-to-r').style.width = `${memValue}%`;
+            }
+
+            // Update GPU usage
+            if (metrics.gpu) {
+                const gpuValue = Math.round(metrics.gpu.usage);
+                document.querySelector('[data-metric="gpu"]').textContent = `${gpuValue}%`;
+                document.querySelector('[data-metric="gpu"]').parentElement.nextElementSibling
+                    .querySelector('.bg-gradient-to-r').style.width = `${gpuValue}%`;
+            }
+        }
+
+        function showAlert(alert) {
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg ${
+                alert.level === 'warning' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'
+            }`;
+            alertDiv.textContent = alert.message;
+
+            // Add to document
+            document.body.appendChild(alertDiv);
+
+            // Remove after 5 seconds
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function updateSyncStatus(syncData) {
+            const syncStatus = document.querySelector('[data-status="sync"]');
+            if (syncData.inProgress) {
+                syncStatus.innerHTML = '<i class="fas fa-sync fa-spin"></i> Syncing...';
+            } else {
+                syncStatus.innerHTML = '<i class="fas fa-check"></i> Last sync: ' + 
+                    new Date(syncData.lastSync).toLocaleTimeString();
+            }
+        }
+
+        // Initialize everything when the page loads
+        window.addEventListener('load', async () => {
+            // Initialize charts
+            initializeCharts();
+
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.register('./sw.js', {
+                        scope: './'
+                    });
+                    console.log('ServiceWorker registration successful');
+                } catch (err) {
+                    console.log('ServiceWorker registration failed:', err);
+                }
+            }
+
+            // Start OmegaAI services
+            try {
+                await omegaAIService.start();
+                console.log('OmegaAI services started successfully');
+            } catch (error) {
+                console.error('Failed to start OmegaAI services:', error);
+                showAlert({
+                    level: 'error',
+                    message: 'Failed to start OmegaAI services. Please try again.'
+                });
+            }
+        });
+
+        // Button Event Listeners
+        document.getElementById('startBtn').addEventListener('click', async () => {
+            try {
+                await omegaAIService.start();
+                showAlert({
+                    level: 'success',
+                    message: 'Services started successfully'
+                });
+            } catch (error) {
+                showAlert({
+                    level: 'error',
+                    message: 'Failed to start services: ' + error.message
+                });
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', async () => {
+            try {
+                await omegaAIService.stop();
+                showAlert({
+                    level: 'success',
+                    message: 'Services stopped successfully'
+                });
+            } catch (error) {
+                showAlert({
+                    level: 'error',
+                    message: 'Failed to stop services: ' + error.message
+                });
+            }
+        });
+    </script>
+</body>
+</html>

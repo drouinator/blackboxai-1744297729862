@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=http://localhost:8000" />
+    <title>OmegaAI Dashboard</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABJBJREFUWEe9V11oHFUUPufObtLdZHc2u4mNtQhiFR+KKKgUQcUHwSqiIFLBBx98qw/2QaQ+KFJQ8EF8EkQQH/wBEXzy/6e2tQqKoBREERFUsE2yu7PJzs5s9h7Pd+/O7M7s7Gw2Tb2wZGfm3nvO953/e4n+54V3+v7g4KNE1EVEKSL6k4heZ+aPK5XK0VqtNktEWWZ+yBjzZaVSeXHXAOI4fhUAXtNa3zUzM/NneXwcx6eI6GNr7YPM/JLW+pXp6en3dwUgjuNJInqPiI4R0UVr7TPM/G2hQQkhDjPzCSLaS0TvMvOYUurTHQOI4/g0EY0bY/qY+SgRPWetHSSiD4joODN/xczPK6W+2zYAY8xepdSvQogjzPwtEY0y8wQzv0hEE8aYE1rrE9PT099sC4BSqh7H8QUiGmPmk0R0zhjzOBG9QURvMfNprfUDOzo+Y8wRrfUPQogjzPwNEY0y8yQzv0BEbxtjntJanzYAUG8GwBhzmJnPEtEDRPQeM48rpb7qBGCMOay1/l4IcQ8zf09Eo8z8NhG9yczPaK2/2DYApdQ/cRz/SkSvMPMZrfUDnTRgjDmktf5RCHGPK0Vm/pSZx5RSX+4EwN1KqT+EEEeZ+RwRjTDzJDO/REQTxpgRrfXnOwGQxHF8kYhGmPkUM48rpb7uBKDZCWPMQa31j0KIe5n5ByIaYeYpZn6NiN40xjyttf6sIwCl1D/GmN+I6FVmPqu1vr8TgDiODyql5oQQdzPzj0Q0wsxTRPQ6M7+jtX6qIwCl1GIcxxeIaJiZTymlHuwEII7jA0qpn4UQdzHzT0Q0wsxTRPQGM7+rtX6yIwCl1FIcx78T0WvMfEZrfX8nAMaY/UqpX4QQdzLzz0Q0wsxTRPQmM7+nlHqiIwCl1HIcx38Q0evMfFpr/UAnAHEc71NK/SqEuIOZzxPRCDNPEdFbzPy+UurxjgCUUv/GcXyRiIaY+ZTW+qFOAIwxvUqpOSHE7cz8CxENM/MUEb3NzB8opR7rCEAptRLH8SUiGmLmk1rrhzsByANg5tuI6DwRDTPzFBG9w8wfKqUe7QhAKbUax/ElIhpk5pNa60c6ATDGKKXUnBBiHzP/SkTDzDxFRO8y80dKqZGOAJRSa3EcXyaiQWY+qbV+tBMAY0yPUuqCEGIvM/9GRMPMPEVEk8z8sVJquCMApdR6HMeXiWiQmU9qrR/rBMAY062U+l0IsYeZfyeiYWaeIqIPmPkTpdRQRwBKqWYcx38S0QAzn9RaP94JgDGmSyn1hxCii5kvEdEQM08R0YfM/KlSarAjAKVUK47jK0TUz8wntNZPdgIQx3GXUuqiEKKLma8Q0RAzTxHRR8z8mVJqoCMApdRGHMdXiKifmU9orZ/qBMAY06WUuiiE6GLmq0Q0yMxTRPQxM3+ulOrrCEAptRnH8VUi6mPmE1rrpzsByANg5utENMjMU0T0CTP3K6Xu7AhAKZXEcXyNiHqZ+YTW+plOAIwxnUqpOSFEJzNfI6JBZp4iok+ZuV8pdUdHAEqpNI7j60TUy8zHtdbPdgJgjOlUSs0JITqY+ToRDTDzFBF9xswDSqnbOwKQUmbGmBtE1MPMx7XWz3UC8B8OvQWWC6h11QAAAABJRU5ErkJggg==">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 5px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .text {
+            position: absolute;
+            margin-top: 120px;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <span class="loader"></span>
+        <div class="text">Loading OmegaAI Dashboard...</div>
+    </div>
+</body>
+</html>
